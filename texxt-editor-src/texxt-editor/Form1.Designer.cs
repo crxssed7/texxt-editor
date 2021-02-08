@@ -29,21 +29,21 @@ namespace texxt_editor
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbEditor = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // textBox1
+            // tbEditor
             // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(2)))), ((int)(((byte)(2)))));
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(10, 10);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(780, 430);
-            this.textBox1.TabIndex = 0;
+            this.tbEditor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(2)))), ((int)(((byte)(2)))));
+            this.tbEditor.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbEditor.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbEditor.ForeColor = System.Drawing.Color.White;
+            this.tbEditor.Location = new System.Drawing.Point(10, 10);
+            this.tbEditor.Multiline = true;
+            this.tbEditor.Name = "tbEditor";
+            this.tbEditor.Size = new System.Drawing.Size(780, 430);
+            this.tbEditor.TabIndex = 0;
             // 
             // Form1
             // 
@@ -51,7 +51,7 @@ namespace texxt_editor
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(2)))), ((int)(((byte)(2)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbEditor);
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "texxt editor";
@@ -62,7 +62,7 @@ namespace texxt_editor
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbEditor;
     }
 }
 
