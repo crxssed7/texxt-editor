@@ -48,6 +48,7 @@ namespace texxt_editor
             this.tbEditor.Size = new System.Drawing.Size(780, 407);
             this.tbEditor.TabIndex = 0;
             this.tbEditor.Text = "";
+            this.tbEditor.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.tbEditor_LinkClicked);
             this.tbEditor.TextChanged += new System.EventHandler(this.tbEditor_TextChanged);
             this.tbEditor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbEditor_KeyDown);
             // 

@@ -175,5 +175,10 @@ namespace texxt_editor
                 }
             }
         }
+
+        private void tbEditor_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.LinkText);
+        }
     }
 }
