@@ -29,6 +29,7 @@ namespace texxt_editor
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tbEditor = new System.Windows.Forms.RichTextBox();
             this.lblFile = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -70,6 +71,7 @@ namespace texxt_editor
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.lblFile);
             this.Controls.Add(this.tbEditor);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(816, 489);
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(10);

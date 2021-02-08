@@ -45,7 +45,7 @@ namespace texxt_editor
             }
             else
             {
-                lblFile.Text = "no file";
+                lblFile.Text = "file: no file";
             }
         }
 
@@ -60,7 +60,7 @@ namespace texxt_editor
                     tbEditor.SelectionStart = tbEditor.Text.Length != 0 ? tbEditor.Text.Length : 0;
                     TextLocation = location;
                     saved = true;
-                    this.Text = "texxt editor";
+                    lblFile.Text = txtLocation != "" ? "file: " + txtLocation : "file: no file";
                 }
             }
             catch (Exception e)
@@ -80,7 +80,7 @@ namespace texxt_editor
                     {
                         streamWriter.Write(tbEditor.Text.Trim());
                         saved = true;
-                        this.Text = "texxt editor";
+                        lblFile.Text = txtLocation != "" ? "file: " + txtLocation : "file: no file";
                     }
                 }
                 else
@@ -112,7 +112,7 @@ namespace texxt_editor
                             streamWriter.Write(tbEditor.Text.Trim());
                             TextLocation = fileLocation;
                             saved = true;
-                            this.Text = "texxt editor";
+                            lblFile.Text = txtLocation != "" ? "file: " + txtLocation : "file: no file";
                         }
                     }
                 }
@@ -159,7 +159,7 @@ namespace texxt_editor
             if (saved != false)
             {
                 saved = false;
-                this.Text += " *";
+                lblFile.Text = txtLocation != "" ? "file: " + txtLocation + " *" : "file: no file *";
             }
         }
 
