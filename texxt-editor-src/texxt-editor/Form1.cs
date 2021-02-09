@@ -218,6 +218,10 @@ namespace texxt_editor
                     System.Diagnostics.Process.Start(commandArgs[0]);
                     this.Close();
                 }
+                else
+                {
+                    MessageBox.Show("Could not execute command --exec(). Check that the arguments are valid.");
+                }
             }
         }
     }
