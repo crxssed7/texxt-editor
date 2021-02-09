@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -152,6 +153,11 @@ namespace texxt_editor
                     }
                 }
             }
+            else if (e.Control && e.KeyCode == Keys.E)
+            {
+                tbEditor.SelectionAlignment = HorizontalAlignment.Left;
+                ParseArgs(tbEditor.Text);
+            }
         }
 
         private void tbEditor_TextChanged(object sender, EventArgs e)
@@ -179,6 +185,34 @@ namespace texxt_editor
         private void tbEditor_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(e.LinkText);
+        }
+
+        void ParseArgs(string args)
+        {
+            // Basic format of a command: --commandname('args')
+            var commandArgsReg = new Regex("'.*?'");
+            var commandArgsMatch = commandArgsReg.Matches(args);
+            string[] commandArgs = new string[commandArgsMatch.Count];
+            for (int i = 0; i < commandArgsMatch.Count; i++)
+            {
+                commandArgs[i] = commandArgsMatch[i].ToString().Substring(1, commandArgsMatch[i].ToString().Length - 2);
+            }
+            var commandNameReg = new Regex(@"-.*?\(");
+            var commandNameMatches = commandNameReg.Matches(args);
+            string commandName = "";
+            foreach (var arg in commandNameMatches)
+            {
+                commandName = arg.ToString().Substring(2, arg.ToString().Length - 3);
+            }
+
+            if (commandName == "exec")
+            {
+                if (commandArgs.Length == 1)
+                {
+                    // Only one command given
+                    System.Diagnostics.Process.Start(commandArgs[0]);
+                }
+            }
         }
     }
 }
