@@ -212,6 +212,12 @@ namespace texxt_editor
                     // Only one command given
                     System.Diagnostics.Process.Start(commandArgs[0]);
                 }
+                else if (commandArgs.Length == 2 && commandArgs[1] == "true")
+                {
+                    // Two commands given, close app after executing
+                    System.Diagnostics.Process.Start(commandArgs[0]);
+                    this.Close();
+                }
             }
         }
     }
