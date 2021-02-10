@@ -14,6 +14,8 @@ namespace texxt_editor
 {
     public partial class Form1 : Form
     {
+        private bool editing = true;
+
         private bool saved = true;
 
         private string txtLocation = "";
@@ -27,7 +29,34 @@ namespace texxt_editor
             set
             {
                 txtLocation = value;
-                lblFile.Text = "file: " + txtLocation;
+                if (txtLocation == "")
+                {
+                    lblFile.Text = "file: no file";
+                }
+                else
+                {
+                    lblFile.Text = "file: " + txtLocation;
+                }
+            }
+        }
+
+        public bool Editing
+        {
+            get
+            {
+                return editing;
+            }
+            set
+            {
+                editing = value;
+                if (editing == true)
+                {
+                    lblFile.Text = saved == true ? "file: no file" : "file: no file *";
+                }
+                else
+                {
+                    lblFile.Text = "script mode";
+                }
             }
         }
 
@@ -131,7 +160,8 @@ namespace texxt_editor
                 tbEditor.GetLineFromCharIndex(tbEditor.SelectionStart) == tbEditor.GetLineFromCharIndex(tbEditor.TextLength) && e.KeyData == Keys.Down ||
                 tbEditor.SelectionStart == tbEditor.TextLength && e.KeyData == Keys.Right ||
                 tbEditor.SelectionStart == 0 && e.KeyData == Keys.Left ||
-                (tbEditor.SelectionStart == 0 && e.KeyData == Keys.Back && tbEditor.SelectedText == "")
+                (tbEditor.SelectionStart == 0 && e.KeyData == Keys.Back && tbEditor.SelectedText == "") ||
+                tbEditor.SelectionStart == tbEditor.TextLength && e.KeyData == Keys.Delete
             ) 
             { 
                 e.Handled = true;
@@ -139,7 +169,10 @@ namespace texxt_editor
 
             if (e.Control && e.KeyCode == Keys.S)
             {
-                SaveFile();
+                if (editing == true)
+                {
+                    SaveFile();
+                }
             }
             else if (e.Control && e.KeyCode == Keys.O)
             {
@@ -153,10 +186,24 @@ namespace texxt_editor
                     }
                 }
             }
+            else if (e.KeyCode == Keys.F6)
+            {
+                if (txtLocation == "")
+                {
+                    Editing = !Editing;
+                }
+                else
+                {
+                    MessageBox.Show("You are currently editing a file. You must close it before entering script mode.");
+                }
+            }
             else if (e.KeyCode == Keys.F5)
             {
-                tbEditor.SelectionAlignment = HorizontalAlignment.Left;
-                ParseArgs(GlobalFunctions.SplitText(tbEditor.Text));
+                if (Editing == false)
+                {
+                    tbEditor.SelectionAlignment = HorizontalAlignment.Left;
+                    ParseArgs(GlobalFunctions.SplitText(tbEditor.Text));
+                }
             }
         }
 
@@ -185,6 +232,12 @@ namespace texxt_editor
         private void tbEditor_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(e.LinkText);
+        }
+
+        void CloseFile()
+        {
+            SaveFile();
+            txtLocation = "";
         }
 
         void ParseArgs(string[] commands)
