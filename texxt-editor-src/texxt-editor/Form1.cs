@@ -153,10 +153,10 @@ namespace texxt_editor
                     }
                 }
             }
-            else if (e.Control && e.KeyCode == Keys.E)
+            else if (e.KeyCode == Keys.F5)
             {
                 tbEditor.SelectionAlignment = HorizontalAlignment.Left;
-                ParseArgs(tbEditor.Text);
+                ParseArgs(GlobalFunctions.SplitText(tbEditor.Text));
             }
         }
 
@@ -187,40 +187,75 @@ namespace texxt_editor
             System.Diagnostics.Process.Start(e.LinkText);
         }
 
-        void ParseArgs(string args)
+        void ParseArgs(string[] commands)
         {
             // Basic format of a command: --commandname('args')
-            var commandArgsReg = new Regex("'.*?'");
-            var commandArgsMatch = commandArgsReg.Matches(args);
-            string[] commandArgs = new string[commandArgsMatch.Count];
-            for (int i = 0; i < commandArgsMatch.Count; i++)
+            foreach (var command in commands)
             {
-                commandArgs[i] = commandArgsMatch[i].ToString().Substring(1, commandArgsMatch[i].ToString().Length - 2);
-            }
-            var commandNameReg = new Regex(@"-.*?\(");
-            var commandNameMatches = commandNameReg.Matches(args);
-            string commandName = "";
-            foreach (var arg in commandNameMatches)
-            {
-                commandName = arg.ToString().Substring(2, arg.ToString().Length - 3);
-            }
-
-            if (commandName == "exec")
-            {
-                if (commandArgs.Length == 1)
+                var commandArgsReg = new Regex("'.*?'");
+                var commandArgsMatch = commandArgsReg.Matches(command);
+                string[] commandArgs = new string[commandArgsMatch.Count];
+                for (int i = 0; i < commandArgsMatch.Count; i++)
                 {
-                    // Only one command given
-                    System.Diagnostics.Process.Start(commandArgs[0]);
+                    commandArgs[i] = commandArgsMatch[i].ToString().Substring(1, commandArgsMatch[i].ToString().Length - 2);
                 }
-                else if (commandArgs.Length == 2 && commandArgs[1] == "true")
+                var commandNameReg = new Regex(@"-.*?\(");
+                var commandNameMatches = commandNameReg.Matches(command);
+                string commandName = "";
+                foreach (var arg in commandNameMatches)
                 {
-                    // Two commands given, close app after executing
-                    System.Diagnostics.Process.Start(commandArgs[0]);
-                    this.Close();
+                    commandName = arg.ToString().Substring(2, arg.ToString().Length - 3);
+                }
+
+                if (commandName == "get-cmd-args")
+                {
+                    if (commandArgs.Length == 1)
+                    {
+                        GetCommandArgsCommand.Execute(commandArgs[0]);
+                    }
+                }
+                else if (commandName == "set-variable")
+                {
+                    if (commandArgs.Length == 2)
+                    {
+                        SetVariableCommand.Execute(commandArgs[0], commandArgs[1]);
+                    }
+                }
+                else if (commandName == "print")
+                {
+                    if (commandArgs.Length == 1)
+                    {
+                        PrintCommand.Execute(commandArgs[0]);
+                    }
+                }
+                else if (commandName == "exec")
+                {
+                    if (commandArgs.Length == 1)
+                    {
+                        ExecuteCommand.Execute(commandArgs[0]);
+                    }
+                    else if (commandArgs.Length == 2)
+                    {
+                        ExecuteCommand.Execute(commandArgs[0], commandArgs[1]);
+                    }
+                }
+                else if (commandName == "clean")
+                {
+                    if (commandArgs.Length == 0)
+                    {
+                        CleanCommand.Execute();
+                    }
+                }
+                else if (commandName == "delete")
+                {
+                    if (commandArgs.Length == 1)
+                    {
+                        DeleteVariableCommand.Execute(commandArgs[0]);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Could not execute command --exec(). Check that the arguments are valid.");
+                    MessageBox.Show("Command not recognised: " + commandName);
                 }
             }
         }
