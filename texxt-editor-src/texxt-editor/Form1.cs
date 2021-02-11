@@ -205,6 +205,10 @@ namespace texxt_editor
                     ParseArgs(GlobalFunctions.SplitText(tbEditor.Text));
                 }
             }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                CloseFile();
+            }
         }
 
         private void tbEditor_TextChanged(object sender, EventArgs e)
@@ -236,8 +240,15 @@ namespace texxt_editor
 
         void CloseFile()
         {
-            SaveFile();
-            txtLocation = "";
+            if (TextLocation != "")
+            {
+                if (saved == false)
+                {
+                    SaveFile();
+                }
+                TextLocation = "";
+                tbEditor.Text = "";
+            }
         }
 
         void ParseArgs(string[] commands)
