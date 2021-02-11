@@ -317,6 +317,13 @@ namespace texxt_editor
                         DeleteVariableCommand.Execute(commandArgs[0]);
                     }
                 }
+                else if (commandName == "increment")
+                {
+                    if (commandArgs.Length == 1)
+                    {
+                        IncrementCommand.Execute(commandArgs[0]);
+                    }
+                }
                 else
                 {
                     MessageBox.Show("Command not recognised: " + commandName);

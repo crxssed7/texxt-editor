@@ -221,4 +221,55 @@ namespace texxt_editor
             }
         }
     }
+
+    public static class IncrementCommand
+    {
+        public static void Execute(string name)
+        {
+            if (name.StartsWith(":"))
+            {
+                string actualName = GlobalFunctions.GetVariable(name.Substring(1));
+
+                // Get the variable
+                if (CommandVariables.Variables.ContainsKey(actualName))
+                {
+                    try
+                    {
+                        double value = Convert.ToDouble(GlobalFunctions.GetVariable(actualName));
+                        value++;
+                        GlobalFunctions.SaveNoColons(actualName, value.ToString());
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Increment error: " + e.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Variable not found: " + actualName);
+                }
+            }
+            else
+            {
+                // Get the variable
+                if (CommandVariables.Variables.ContainsKey(name))
+                {
+                    try
+                    {
+                        double value = Convert.ToDouble(GlobalFunctions.GetVariable(name));
+                        value++;
+                        GlobalFunctions.SaveNoColons(name, value.ToString());
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Increment error: " + e.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Variable not found: " + name);
+                }
+            }
+        }
+    }
 }
