@@ -70,7 +70,6 @@ namespace texxt_editor
 
             if (args.Length > 1)
             {
-                // Load from the file
                 OpenFile(args[1]);
             }
             else
@@ -81,21 +80,46 @@ namespace texxt_editor
 
         void OpenFile(string location)
         {
-            try
+            // Load from the file
+            if (location.EndsWith(".txxt"))
             {
-                using (StreamReader streamReader = new StreamReader(location))
+                // Open from script file.
+                try
                 {
-                    tbEditor.Text = streamReader.ReadToEnd();
-                    // Set cursor location to the end
-                    tbEditor.SelectionStart = tbEditor.Text.Length != 0 ? tbEditor.Text.Length : 0;
-                    TextLocation = location;
-                    saved = true;
-                    lblFile.Text = txtLocation != "" ? "file: " + txtLocation : "file: no file";
+                    using (StreamReader streamReader = new StreamReader(location))
+                    {
+                        tbEditor.Text = streamReader.ReadToEnd();
+                        // Set cursor location to the end
+                        tbEditor.SelectionStart = tbEditor.Text.Length != 0 ? tbEditor.Text.Length : 0;
+                        TextLocation = location;
+                        saved = true;
+                        Editing = false;
+                        lblFile.Text = txtLocation != "" ? "script mode: " + txtLocation : "script mode";
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"there was an error: {e.Message.ToLower()}");
                 }
             }
-            catch (Exception e)
+            else
             {
-                MessageBox.Show($"there was an error: {e.Message.ToLower()}");
+                try
+                {
+                    using (StreamReader streamReader = new StreamReader(location))
+                    {
+                        tbEditor.Text = streamReader.ReadToEnd();
+                        // Set cursor location to the end
+                        tbEditor.SelectionStart = tbEditor.Text.Length != 0 ? tbEditor.Text.Length : 0;
+                        TextLocation = location;
+                        saved = true;
+                        lblFile.Text = txtLocation != "" ? "file: " + txtLocation : "file: no file";
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"there was an error: {e.Message.ToLower()}");
+                }
             }
         }
 
@@ -110,7 +134,14 @@ namespace texxt_editor
                     {
                         streamWriter.Write(tbEditor.Text.Trim());
                         saved = true;
-                        lblFile.Text = txtLocation != "" ? "file: " + txtLocation : "file: no file";
+                        if (Editing == true)
+                        {
+                            lblFile.Text = txtLocation != "" ? "file: " + txtLocation : "file: no file";
+                        }
+                        else
+                        {
+                            lblFile.Text = txtLocation != "" ? "script mode: " + txtLocation : "script mode";
+                        }
                     }
                 }
                 else
@@ -169,10 +200,7 @@ namespace texxt_editor
 
             if (e.Control && e.KeyCode == Keys.S)
             {
-                if (editing == true)
-                {
-                    SaveFile();
-                }
+                SaveFile();
             }
             else if (e.Control && e.KeyCode == Keys.O)
             {
@@ -194,7 +222,14 @@ namespace texxt_editor
                 }
                 else
                 {
-                    MessageBox.Show("You are currently editing a file. You must close it before entering script mode.");
+                    if (txtLocation.EndsWith(".txxt"))
+                    {
+                        MessageBox.Show("You are currently editing a script. You must close it before entering normal mode.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("You are currently editing a file. You must close it before entering script mode.");
+                    }
                 }
             }
             else if (e.KeyCode == Keys.F5)
@@ -216,7 +251,14 @@ namespace texxt_editor
             if (saved != false)
             {
                 saved = false;
-                lblFile.Text = txtLocation != "" ? "file: " + txtLocation + " *" : "file: no file *";
+                if (Editing == true)
+                {
+                    lblFile.Text = txtLocation != "" ? "file: " + txtLocation + " *" : "file: no file *";
+                }
+                else
+                {
+                    lblFile.Text = txtLocation != "" ? "script mode: " + txtLocation + " *" : "script mode *";
+                }
             }
         }
 
@@ -246,6 +288,7 @@ namespace texxt_editor
                 {
                     SaveFile();
                 }
+                Editing = true;
                 TextLocation = "";
                 tbEditor.Text = "";
             }

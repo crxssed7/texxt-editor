@@ -323,4 +323,12 @@ namespace texxt_editor
             }
         }
     }
+
+    public static class CloseCommand
+    {
+        public static void Execute()
+        {
+            Application.Exit();
+        }
+    }
 }
