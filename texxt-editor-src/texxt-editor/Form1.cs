@@ -70,7 +70,15 @@ namespace texxt_editor
 
             if (args.Length > 1)
             {
-                OpenFile(args[1]);
+                if (File.Exists(args[1]))
+                {
+                    OpenFile(args[1]);
+                }
+                else
+                {
+                    MessageBox.Show("could not find file: " + args[1]);
+                    lblFile.Text = "file: no file";
+                }
             }
             else
             {
@@ -319,6 +327,10 @@ namespace texxt_editor
                     if (commandArgs.Length == 1)
                     {
                         GetCommandArgsCommand.Execute(commandArgs[0]);
+                    }
+                    else if (commandArgs.Length == 2)
+                    {
+                        GetCommandArgsCommand.Execute(commandArgs[0], commandArgs[1]);
                     }
                 }
                 else if (commandName == "set-variable")

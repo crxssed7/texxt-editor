@@ -25,6 +25,31 @@ namespace texxt_editor
                 GlobalFunctions.SaveNoColons(name, value);
             }
         }
+
+        public static void Execute(string name, string index)
+        {
+            try
+            {
+                int newIndex = Convert.ToInt32(index);
+                // get the cmd args
+                var args = Environment.GetCommandLineArgs();
+                string value = args[newIndex];
+
+                // Need to check if what was passed in name is a variable
+                if (name.StartsWith(":"))
+                {
+                    GlobalFunctions.SaveColonName(name, value);
+                }
+                else
+                {
+                    GlobalFunctions.SaveNoColons(name, value);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("there was an error retrieving cmd args: " + e.Message);
+            }
+        }
     }
 
     public static class SetVariableCommand
