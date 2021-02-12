@@ -374,6 +374,13 @@ namespace texxt_editor
                         DecrementCommand.Execute(commandArgs[0]);
                     }
                 }
+                else if (commandName == "close")
+                {
+                    if (commandArgs.Length == 0)
+                    {
+                        CloseCommand.Execute();
+                    }
+                }
                 else
                 {
                     MessageBox.Show("Command not recognised: " + commandName);
