@@ -169,8 +169,16 @@ namespace texxt_editor
             {
                 using (SaveFileDialog saveFileDialog = new SaveFileDialog())
                 {
-                    saveFileDialog.DefaultExt = "txt";
-                    saveFileDialog.Filter = "Text FIles|*.txt|All Files|*.*";
+                    if (Editing == true)
+                    {
+                        saveFileDialog.DefaultExt = "txt";
+                        saveFileDialog.Filter = "Text Files|*.txt|All Files|*.*";
+                    }
+                    else
+                    {
+                        saveFileDialog.DefaultExt = "txxt";
+                        saveFileDialog.Filter = "Texxt Script Files|*.txxt|All Files|*.*";
+                    }
 
                     if (saveFileDialog.ShowDialog() == DialogResult.OK)
                     {
@@ -181,7 +189,14 @@ namespace texxt_editor
                             streamWriter.Write(tbEditor.Text.Trim());
                             TextLocation = fileLocation;
                             saved = true;
-                            lblFile.Text = txtLocation != "" ? "file: " + txtLocation : "file: no file";
+                            if (Editing == true)
+                            {
+                                lblFile.Text = txtLocation != "" ? "file: " + txtLocation : "file: no file";
+                            }
+                            else
+                            {
+                                lblFile.Text = txtLocation != "" ? "script mode: " + txtLocation : "script mode";
+                            }
                         }
                     }
                 }
