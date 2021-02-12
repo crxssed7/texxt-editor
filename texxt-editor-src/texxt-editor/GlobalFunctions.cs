@@ -83,6 +83,7 @@ namespace texxt_editor
             }
             else
             {
+                // Saves a new variable
                 CommandVariables.Variables.Add(name, value);
             }
         }
