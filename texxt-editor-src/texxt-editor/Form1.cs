@@ -206,7 +206,7 @@ namespace texxt_editor
             {
                 using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    openFileDialog.Filter = "Text FIles|*.txt|All Files|*.*";
+                    openFileDialog.Filter = "Texxt FIles|*.txt;*.txxt|All Files|*.*";
 
                     if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
