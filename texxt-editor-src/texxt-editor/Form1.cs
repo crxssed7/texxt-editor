@@ -228,7 +228,7 @@ namespace texxt_editor
                 }
                 else
                 {
-                    if (txtLocation.EndsWith(".txxt"))
+                    if (txtLocation.EndsWith(".txxt") || txtLocation.EndsWith(".exxe"))
                     {
                         MessageBox.Show("You are currently editing a script. You must close it before entering normal mode.");
                     }
@@ -254,17 +254,14 @@ namespace texxt_editor
 
         private void tbEditor_TextChanged(object sender, EventArgs e)
         {
-            if (saved != false)
+            saved = false;
+            if (Editing == true)
             {
-                saved = false;
-                if (Editing == true)
-                {
-                    lblFile.Text = txtLocation != "" ? "file: " + txtLocation + " *" : "file: no file *";
-                }
-                else
-                {
-                    lblFile.Text = txtLocation != "" ? "script mode: " + txtLocation + " *" : "script mode *";
-                }
+                lblFile.Text = txtLocation != "" ? "file: " + txtLocation + " *" : "file: no file *";
+            }
+            else
+            {
+                lblFile.Text = txtLocation != "" ? "script mode: " + txtLocation + " *" : "script mode *";
             }
         }
 
@@ -400,8 +397,6 @@ namespace texxt_editor
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            tbEditor.SelectionBackColor = Color.FromArgb(230, 230, 230);
-
             var args = Environment.GetCommandLineArgs();
 
             if (args.Length > 1)
