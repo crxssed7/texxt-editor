@@ -55,7 +55,7 @@ namespace texxt_editor
                 }
                 else
                 {
-                    lblFile.Text = "script mode";
+                    lblFile.Text = saved == true ? "script mode" : "script mode *";
                 }
             }
         }
@@ -160,7 +160,7 @@ namespace texxt_editor
                     else
                     {
                         saveFileDialog.DefaultExt = "txxt";
-                        saveFileDialog.Filter = "Texxt Script Files|*.txxt|All Files|*.*";
+                        saveFileDialog.Filter = "Texxt Script Files|*.txxt;*.exxe|All Files|*.*";
                     }
 
                     if (saveFileDialog.ShowDialog() == DialogResult.OK)
