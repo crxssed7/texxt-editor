@@ -89,7 +89,7 @@ namespace texxt_editor
         void OpenFile(string location)
         {
             // Load from the file
-            if (location.EndsWith(".txxt"))
+            if (location.EndsWith(".txxt") || location.EndsWith(".exxe"))
             {
                 // Open from script file.
                 try
@@ -103,6 +103,10 @@ namespace texxt_editor
                         saved = true;
                         Editing = false;
                         lblFile.Text = txtLocation != "" ? "script mode: " + txtLocation : "script mode";
+                        if (location.EndsWith(".exxe"))
+                        {
+                            ParseArgs(GlobalFunctions.SplitText(tbEditor.Text));
+                        }
                     }
                 }
                 catch (Exception e)
@@ -229,7 +233,7 @@ namespace texxt_editor
             {
                 using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    openFileDialog.Filter = "Texxt FIles|*.txt;*.txxt|All Files|*.*";
+                    openFileDialog.Filter = "Texxt FIles|*.txt;*.txxt;*.exxe|All Files|*.*";
 
                     if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
