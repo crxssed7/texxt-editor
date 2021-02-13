@@ -63,27 +63,6 @@ namespace texxt_editor
         public Form1()
         {
             InitializeComponent();
-
-            tbEditor.SelectionBackColor = Color.FromArgb(230, 230, 230);
-
-            var args = Environment.GetCommandLineArgs();
-
-            if (args.Length > 1)
-            {
-                if (File.Exists(args[1]))
-                {
-                    OpenFile(args[1]);
-                }
-                else
-                {
-                    MessageBox.Show("could not find file: " + args[1]);
-                    lblFile.Text = "file: no file";
-                }
-            }
-            else
-            {
-                lblFile.Text = "file: no file";
-            }
         }
 
         void OpenFile(string location)
@@ -416,6 +395,30 @@ namespace texxt_editor
                 {
                     MessageBox.Show("Command not recognised: " + commandName);
                 }
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            tbEditor.SelectionBackColor = Color.FromArgb(230, 230, 230);
+
+            var args = Environment.GetCommandLineArgs();
+
+            if (args.Length > 1)
+            {
+                if (File.Exists(args[1]))
+                {
+                    OpenFile(args[1]);
+                }
+                else
+                {
+                    MessageBox.Show("could not find file: " + args[1]);
+                    lblFile.Text = "file: no file";
+                }
+            }
+            else
+            {
+                lblFile.Text = "file: no file";
             }
         }
     }
